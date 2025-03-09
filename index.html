@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Liebe für dich</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/1600x900/?tulips,flowers');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            border: 20px solid transparent;
+            padding: 10px;
+            background-clip: padding-box;
+            border-image: url('https://source.unsplash.com/1600x900/?tulips') 30 round;
+        }
+        .poem-container {
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            display: inline-block;
+            max-width: 90%;
+        }
+        .shuffle-btn {
+            background-color: red;
+            color: white;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: red;
+            animation: floatUp 2s ease-out;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+        .lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+        }
+        .hidden { display: none; }
+        .love-quote {
+            margin-top: 20px;
+            font-size: 18px;
+            font-style: italic;
+            color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="lock-screen" id="lockScreen">
+        <h2>Introduce la contraseña</h2>
+        <input type="password" id="passwordInput" placeholder="DD/MM/YY">
+        <button onclick="checkPassword()">Entrar</button>
+    </div>
+    
+    <div class="poem-container hidden" id="poemContainer">
+        <h1>meine Liebe für dich</h1>
+        <p id="poem">Siempre serás lo mejor de mi vida,<br> mi historia, mi sueño, mi gran realidad,<br> cada latido me dice tu nombre,<br> y a tu lado es donde quiero estar.</p>
+        <button class="shuffle-btn" onclick="shufflePoem()">❤</button>
+        <p class="love-quote">"El amor verdadero no es el que se dice, sino el que se siente en el corazón y se refleja en cada mirada." </p>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === "18/01/25") {
+                document.getElementById("lockScreen").classList.add("hidden");
+                document.getElementById("poemContainer").classList.remove("hidden");
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        }
+        
+        function shufflePoem() {
+            let verses = [
+                "Tus ojos iluminan mis días,",
+                "Tu risa es un sol que calienta mi piel,",
+                "Tu voz me envuelve como brisa ligera,",
+                "Y a tu lado todo está bien.",
+                "Eres la chispa que enciende mi vida,",
+                "El mejor milagro que pudo pasar,",
+                "Tu amor es un viaje sin rumbo ni prisa,",
+                "Y no quiero dejar de viajar."
+            ];
+            verses.sort(() => Math.random() - 0.5);
+            document.getElementById("poem").innerHTML = verses.join("<br>");
+            releaseHearts();
+        }
+
+        function releaseHearts() {
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "❤";
+                document.body.appendChild(heart);
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = "80%";
+                setTimeout(() => { heart.remove(); }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
